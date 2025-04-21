@@ -10,14 +10,14 @@ The project encompasses two main parts:
 
 ## Core Components & Features
 
-### 1. IPv6 UDP Ping (Based on Problem 1)
+### 1. IPv6 UDP Ping
 
 * **IPv6 Communication:** Implements a client/server UDP ping application using IPv6.
 * **Link-Local Addressing:** Specifically designed to work with non-routable IPv6 link-local addresses (e.g., `fe80::...`).
 * **Scope ID Handling:** Correctly configures `struct sockaddr_in6`, including `sin6_addr` and `sin6_scope_id`, to bind sockets to a specific network interface (e.g., `eth0`) using scope identifiers.
 * **Address Parsing:** Handles IPv6 address strings including the interface specifier (e.g., `fe80::a6bb:6dff:fe44:fc43%eth0`).
 
-### 2. UDP Tunneling Service (Based on Problem 2)
+### 2. UDP Tunneling Service
 
 * **Tunneling Server (`tunnels`):**
     * **Concurrent Design:** Uses a parent process to handle control connections and forks child processes for active tunnel sessions.
@@ -32,10 +32,6 @@ The project encompasses two main parts:
     * **Session Teardown:** Can signal the server via the TCP control connection to terminate the tunnel.
 * **Application Integration:** Allows a standard UDP application (like the ping client `pingc`) to send its traffic to the `tunnels` server's data plane port, which then forwards it to the intended final destination server (e.g., `pings`). Responses are routed back through the tunnel.
 
-### 3. (Optional) Bonus Features
-
-* **(Bonus A) Basic Cryptographic Authentication:** Replaces the simple plain-text secret key in the tunneling control plane with a basic cryptographic authentication scheme using XOR-based "encryption" (E) and "decryption" (D) functions with hardcoded public/private keys. This focuses only on the control plane authentication between `tunnelc` and `tunnels`.
-* **(Bonus B) IPv6 Remote Command:** Adapts a previous remote command client/server application (from Lab 3) to use IPv6 link-local addresses, similar to the IPv6 Ping component.
 
 ## Build Instructions
 
